@@ -2,17 +2,17 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import LockIcon from "@mui/icons-material/Lock";
+import { Formik } from "formik";
 import image from "../assets/result.svg";
 import Grid from "@mui/material/Grid";
-
-import { Link, useNavigate } from "react-router-dom";
+import RegisterForm, { registerSchema } from "../components/RegisterForm";
+import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
-import { Form, Formik } from "formik";
+
+import useAuthCall from "../hooks/useAuthCall";
 
 const Register = () => {
-  const navigate = useNavigate();
-  const { currentUser, error } = useSelector((state) => state.auth);
+  const { register } = useAuthCall();
 
   return (
     <Container maxWidth="lg">
@@ -51,56 +51,23 @@ const Register = () => {
           >
             Register
           </Typography>
-          <Formik
-            initialValues={{email:"",password:"",}}
-            validationSchema={LoginScheme}
-            onSubmit={(values, actions) => {
-            login(values)
-            actions.setSubmitting(false)
-            actions.resetForm()
-            }}
-            >
-              {({values, handleBlur, handleChange, errors, touched})=> {
-                <Form>
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 2}}>
-                  <TextField
-                  label="Email"
-                  name="email"
-                  id="email"
-                  type="email"
-                  variant="outlined"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.email && Boolean(errors.email)}
-                  helperText={touched.email && errors.email}                
-                  />
-                  <TextField
-                    label="Password"
-                    name="password"
-                    id="password"
-                    type="password"
-                    variant="outlined"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={touched.password && Boolean(errors.password)}
-                    helperText={touched.password && errors.password}
-                  />
 
-                  <LoadingButton
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                    loading={loading}
-                  >
-                    Submit
-                  </LoadingButton>
-                  </Box>
-                </Form>
-              }}
-            </Formik>
+          <Formik
+            initialValues={{
+              username: "",
+              first_name: "",
+              last_name: "",
+              email: "",
+              password: "",
+            }}
+            validationSchema={registerSchema}
+            onSubmit={(values, actions) => {
+              register({ ...values, password2: values.password });
+              actions.resetForm();
+              actions.setSubmitting(false);
+            }}
+            component={(props) => <RegisterForm {...props} />}
+          ></Formik>
           <Box sx={{ textAlign: "center", mt: 2 }}>
             <Link to="/">Do you have an account?</Link>
           </Box>
