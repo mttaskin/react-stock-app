@@ -1,49 +1,42 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit"
 
-const authSlice = createSlice({
-  name: "auth",
+const stockSlice = createSlice({
+  name: "stock",
 
   initialState: {
-    currentUser: null,
+    purchases: null,
+    sales: null,
+    brands: null,
+    firms: null,
+    products: null,
+    categories: null,
     loading: false,
     error: false,
-    isAdmin: false,
-    token: null,
   },
   reducers: {
     fetchStart: (state) => {
-      state.loading = true;
-      state.error = false;
+      state.loading = true
+      state.error = false
     },
-    loginSuccess: (state, { payload }) => {
-      state.loading = false;
-      state.currentUser = payload?.user?.username;
-      state.isAdmin = payload?.user?.is_superuser;
-      state.token = payload?.key;
+    getSuccess: (state, { payload: { data, url } }) => {
+      state.loading = false
+      state[url] = data
     },
-    logoutSuccess: (state) => {
-      state.loading = false;
-      state.currentUser = null;
-      state.token = null;
-    },
-    registerSuccess: (state, { payload }) => {
-      state.loading = false;
-      state.currentUser = payload?.username;
-      state.token = payload?.token;
-      state.error = false;
-    },
+    // getSuccessSales: (state, { payload }) => {
+    //   state.loading = false
+    //   state.sales = payload
+    // },
+    // getSuccesPurchase: (state, { payload }) => {
+    //   state.loading = false
+    //   state.purchases = payload
+    // },
+
     fetchFail: (state) => {
-      state.loading = false;
-      state.error = true;
+      state.loading = false
+      state.error = true
     },
   },
-});
+})
 
-export const {
-  fetchStart,
-  loginSuccess,
-  logoutSuccess,
-  registerSuccess,
-  fetchFail,
-} = authSlice.actions;
-export default authSlice.reducer;
+export const { fetchStart, getSuccess, fetchFail } = stockSlice.actions
+export default stockSlice.reducer
