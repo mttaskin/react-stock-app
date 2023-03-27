@@ -6,13 +6,13 @@ import TextField from "@mui/material/TextField"
 import { Button } from "@mui/material"
 import useStockCall from "../../hooks/useStockCall"
 
-export default function FirmModal({ open, handleClose }) {
-  const [info, setInfo] = useState({
-    name: "",
-    phone: "",
-    address: "",
-    image: "",
-  })
+export default function FirmModal({ open, handleClose ,info, setInfo}) {
+//   const [info, setInfo] = useState({
+//     name: "",
+//     phone: "",
+//     address: "",
+//     image: "",
+//   })
 
   const { postStockData } = useStockCall()
 
