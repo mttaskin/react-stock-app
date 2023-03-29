@@ -13,18 +13,18 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import { btnStyle } from "../styles/globalStyle"
 
 const Products = () => {
-  const { getStockData, deleteStockData } = useStockCall()
+  const { deleteStockData, getProCatBrand } = useStockCall()
   const { products } = useSelector((state) => state.stock)
   const [open, setOpen] = useState(false)
 
   const [info, setInfo] = useState({
+    category_id: "",
+    brand_id: "",
     name: "",
-    phone: "",
-    address: "",
-    image: "",
   })
 
   const handleOpen = () => setOpen(true)
+
   const handleClose = () => setOpen(false)
 
   const columns = [
@@ -91,7 +91,12 @@ const Products = () => {
   ]
 
   useEffect(() => {
-    getStockData("products")
+    // getStockData("products")
+    // getStockData("categories")
+    // getStockData("brands")
+
+    //! Promise All
+    getProCatBrand()
   }, [])
 
   return (
