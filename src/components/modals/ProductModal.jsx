@@ -7,7 +7,7 @@ import Select from "@mui/material/Select"
 
 import { modalStyle } from "../../styles/globalStyle"
 import TextField from "@mui/material/TextField"
-import { Button } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import useStockCall from "../../hooks/useStockCall"
 import { useSelector } from "react-redux"
 
