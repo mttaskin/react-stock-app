@@ -1,42 +1,44 @@
 import * as React from "react"
 import Card from "@mui/material/Card"
 import CardActions from "@mui/material/CardActions"
-import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
-
-import Typography from "@mui/material/Typography"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import EditIcon from "@mui/icons-material/Edit"
-import { btnStyle, flex } from "../styles/globalStyle"
+import { CardHeader } from "@mui/material"
 import useStockCall from "../hooks/useStockCall"
+import { btnStyle, flex } from "../styles/globalStyle"
 
-export default function BrandCard({ brand }) {
+const BrandCard = ({ brand, setOpen, setInfo }) => {
   const { deleteStockData } = useStockCall()
 
   return (
     <Card
+      elevation={10}
       sx={{
         p: 2,
         width: "300px",
         height: "400px",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
       }}
     >
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {brand?.name}
-        </Typography>
-      </CardContent>
+      <CardHeader title={brand?.name} />
+
       <CardMedia
-        sx={{ p: 1, objectFit: "contain", height: "250px" }}
         image={brand?.image}
-        title="firm-image"
+        sx={{ p: 1, objectFit: "contain", height: "250px" }}
         component="img"
+        alt="brand-img"
       />
+
       <CardActions sx={flex}>
-        <EditIcon sx={btnStyle} />
+        <EditIcon
+          sx={btnStyle}
+          onClick={() => {
+            setInfo(brand)
+            setOpen(true)
+          }}
+        />
         <DeleteOutlineIcon
           sx={btnStyle}
           onClick={() => deleteStockData("brands", brand.id)}
@@ -45,3 +47,5 @@ export default function BrandCard({ brand }) {
     </Card>
   )
 }
+
+export default BrandCard

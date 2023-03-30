@@ -1,4 +1,3 @@
-
 import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemButton from "@mui/material/ListItemButton"
@@ -47,7 +46,7 @@ const icons = [
   {
     title: "Admin Panel",
     icon: <SupervisorAccountIcon />,
-    url: "https://12101.fullstack.clarusway.com/admin",
+    url: "https://10001.fullstack.clarusway.com/admin",
   },
 ]
 
