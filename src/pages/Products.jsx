@@ -13,7 +13,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import { btnStyle } from "../styles/globalStyle"
 
 const Products = () => {
-  const { deleteStockData, getProCatBrand } = useStockCall()
+  const { getStockData, deleteStockData, getProCatBrand } = useStockCall()
   const { products } = useSelector((state) => state.stock)
   const [open, setOpen] = useState(false)
 
