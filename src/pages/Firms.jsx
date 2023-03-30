@@ -47,9 +47,7 @@ const Firms = () => {
   useEffect(() => {
     // getFirms()
     getStockData("firms")
-  }, [])
-
-  console.log(firms)
+  }, []) // eslint-disable-line
 
   return (
     <div>
@@ -57,7 +55,11 @@ const Firms = () => {
         Firm
       </Typography>
 
-      <Button variant="contained" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        onClick={handleOpen}
+        sx={{ marginBottom: "1rem" }}
+      >
         New Firm
       </Button>
 
