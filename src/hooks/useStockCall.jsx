@@ -1,6 +1,12 @@
 // import axios from "axios"
 import { useDispatch } from "react-redux"
-import { fetchFail, getSuccess, fetchStart } from "../features/stockSlice"
+// import { useSelector } from "react-redux"
+import {
+  fetchFail,
+  getSuccess,
+  fetchStart,
+  getProCatBrandSuccess,
+} from "../features/stockSlice"
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify"
 import useAxios from "./useAxios"
 
@@ -17,7 +23,6 @@ const useStockCall = () => {
       //     headers: { Authorization: `Token ${token}` },
       //   })
       const { data } = await axiosWithToken(`stock/${url}/`)
-      console.log(data)
       dispatch(getSuccess({ data, url }))
     } catch (error) {
       console.log(error)
@@ -51,7 +56,45 @@ const useStockCall = () => {
     }
   }
 
-  return { getStockData, deleteStockData, postStockData }
+  const putStockData = async (url, info) => {
+    dispatch(fetchStart())
+    try {
+      await axiosWithToken.put(`stock/${url}/${info.id}/`, info)
+      toastSuccessNotify(`${url} successfuly updated`)
+      getStockData(url)
+    } catch (error) {
+      console.log(error)
+      dispatch(fetchFail())
+      toastErrorNotify(`${url} can not be updated`)
+    }
+  }
+
+  const getProCatBrand = async () => {
+    dispatch(fetchStart())
+    try {
+      const [products, categories, brands] = await Promise.all([
+        axiosWithToken.get("stock/products/"),
+        axiosWithToken.get("stock/categories/"),
+        axiosWithToken.get("stock/brands/"),
+      ])
+
+      dispatch(
+        getProCatBrandSuccess([products?.data, categories?.data, brands?.data])
+      )
+    } catch (error) {
+      console.log(error)
+      dispatch(fetchFail())
+      toastErrorNotify(`Data can not be fetched`)
+    }
+  }
+
+  return {
+    getStockData,
+    deleteStockData,
+    postStockData,
+    putStockData,
+    getProCatBrand,
+  }
 }
 
 export default useStockCall
