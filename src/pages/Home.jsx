@@ -11,7 +11,6 @@ const Home = () => {
     getStockData("sales")
     getStockData("purchases")
   }, [])
-
   return (
     <div>
       <Typography variant="h4" color="error" mb={3}>
